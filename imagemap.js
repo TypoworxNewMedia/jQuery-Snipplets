@@ -9,4 +9,5 @@ $('img[usemap]').click(function(e){
     ;
 
     console.log('RECT', [mapX, mapY, mapX+size, mapY+size].join(','));
+    console.log('CIRCLE', [mapX, mapY, size].join(','));
 });
