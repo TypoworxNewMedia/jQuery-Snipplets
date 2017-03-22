@@ -20,19 +20,18 @@ var _debug = document.location.hostname.toString().indexOf('.local') > -1;
     };
 })();
 
-tryModule(function() {
-    throw 'DOW';
-}, 'test.unit.dow');
-
-/**
-Console throws this only if in debug-mode!
-
-(x) Exception in component 'test.unit.dow' DOW
-**/
-
-console.log('This code runs anyway :D');
-
-
 (function($) {
    // Your jQuery Stuff comes here
+    
+    tryModule(function() {
+        throw 'DOW';
+    }, 'test.unit.dow');
+
+    /**
+    Console throws this only if in debug-mode!
+
+    (x) Exception in component 'test.unit.dow' DOW
+    **/
+
+    console.log('This code runs anyway :D');
 })(jQuery);
