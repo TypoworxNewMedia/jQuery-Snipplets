@@ -8,19 +8,29 @@ var _debug = document.location.hostname.toString().indexOf('.local') > -1;
     }
 
     window.throw = function(exp) { (console.error || console.log)(exp) };
-    window.tryModule = function(f) {
+    window.tryModule = function(f,n) {
         try {
             return f();
         } catch (exp) {
-            if (_debug) (console.error || console.log)(exp);
+            if (_debug) {
+                if(n != undefined) (console.error || console.log)('Exception in component \''+n+'\'', exp);
+                else (console.error || console.log)(exp);
+            }
         }
     };
 })();
 
 tryModule(function() {
     throw 'DOW';
-});
-console.log('Happy we can look forward despite any exception!');
+}, 'test.unit.dow');
+
+/**
+Console throws this only if in debug-mode!
+
+(x) Exception in component 'test.unit.dow' DOW
+**/
+
+console.log('This code runs anyway :D');
 
 
 (function($) {
