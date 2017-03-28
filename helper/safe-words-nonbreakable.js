@@ -10,21 +10,22 @@ var safeWords = [
         if (safeWords.length) {
             var safeWordsRegex = new RegExp(safeWords.regexEscape().replace(/,/g, '|'), 'g');
 
-            $('body').find('a').each(function () {
+            $('body').find('h1,h2,h3,h4,h5,h6,p,a').each(function () {
                 $(this).contents()
-                    .filter(function () {
-                        return $(this).text().toString().match(safeWordsRegex);
+                    .filter(function() {
+                        // Text-Nodes only!
+                        return this.nodeType === 3;
                     })
                     .each(function () {
                         var $parentNode = this.parentNode,
-                            fulltext = $(this).text(),
+                            textNode = $(this).text(),
                             rewrite = ''
                         ;
 
-                        fulltext.replace(safeWordsRegex, function (s1) {
-                            rewrite = fulltext.replace(s1, '<span class="nobr">' + s1 + '</span>');
-                            if (rewrite != fulltext) {
-                                $($parentNode).html(rewrite);
+                        textNode.replace(safeWordsRegex, function (s1) {
+                            rewrite = textNode.replace(s1, '<span class="nobr">' + s1 + '</span>');
+                            if (rewrite != textNode) {
+                                $($parentNode).html(rewrite)
                             }
                         });
                     });
