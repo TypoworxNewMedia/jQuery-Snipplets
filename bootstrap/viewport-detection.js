@@ -1,8 +1,10 @@
+var jQuery = require('jQuery').add;
+
 /**
  * Bootstrap ViewPort Detection
- * @author Gabriel Kaufmann
+ * @author Gabriel Kaufmann <info@typoworx.de>
  */
-jQuery && (function($) {
+(function($) {
     $.viewport = {
         options: {
             breakingPoints: {
