@@ -1,4 +1,18 @@
-var _debug = document.location.hostname.toString().indexOf('.local') > -1;
+/**
+ * App Context
+ */
+var _debug = false;
+if(_environment instanceof Object)
+{
+    if(_environment.hasOwnProperty('appContext'))
+    {
+        _debug = (_environment.appContext == 'Development');
+    }
+}
+else if(document.location.hostname.toString().indexOf('.local') > -1)
+{
+    _debug = true;
+}
 
 (function() {
     window.console = console ||  { log: function() {} };
