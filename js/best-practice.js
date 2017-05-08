@@ -26,6 +26,7 @@ else if(document.location.hostname.toString().indexOf('.local') > -1)
     })();
     
     if(_debug) {
+        console.clear();
         (console.info || console.log)("==============================\nActivating Development-Mode!\n==============================");
         (console.info || console.log)('[*] JS Exceptions active!');
     }
