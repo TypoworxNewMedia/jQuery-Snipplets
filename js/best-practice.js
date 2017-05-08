@@ -15,7 +15,16 @@ else if(document.location.hostname.toString().indexOf('.local') > -1)
 }
 
 (function() {
-    window.console = console ||  { log: function() {} };
+    window.console = (function() {
+        var consoleFallback = {
+            log: function() {}, info: function() {}, warning: function() {}, error: function() {}, clear: function() {}
+        };
+        return $ && $.extend
+            ? $.extend(consoleFallback, console || {})
+            : console || consoleFallback
+        ;
+    })();
+    
     if(_debug) {
         (console.info || console.log)("==============================\nActivating Development-Mode!\n==============================");
         (console.info || console.log)('[*] JS Exceptions active!');
