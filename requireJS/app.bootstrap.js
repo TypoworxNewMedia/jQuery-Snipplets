@@ -19,8 +19,9 @@
             openIban: '3rd-party/openiban.browser'
         },
         shim: {
-            'jQuery': {exports: 'jQuery'},
             'environment': {'deps': ['jQuery']},
+            'jQuery': {exports: 'jQuery'},
+            'jQueryUi': {'deps': ['jQuery']},
             'jQueryMask': {'deps': ['jQuery']}
         },
         deps: ["app"],
