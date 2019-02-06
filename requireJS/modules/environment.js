@@ -2,14 +2,9 @@ define(['jQuery'], function($) {
     /**
      * App Context
      */
-    var _debug = false;
-    if (typeof (_environment) !== 'undefined' && _environment instanceof Object) {
-        if (_environment.hasOwnProperty('appContext')) {
-            _debug = (_environment.appContext === 'Development');
-        }
-    } else if (document.location.hostname.toString().indexOf('.local') > -1 || document.location.hostname.toString().indexOf('local.') > -1) {
-        _debug = true;
-    }
+    window._environment = window._environment instanceof Object ? window._environment : {};
+    window._environment.appContext = window._environment.hasOwnProperty('appContext') ? window._environment.appContext : 'Production';
+    window._environment.debug = (_environment.appContext === 'Development' || document.location.hostname.toString().match(/\.local|local\./) !== null);
 
     (function (w, d, c) {
         // Register Console-Shim
@@ -28,7 +23,7 @@ define(['jQuery'], function($) {
                 ;
         })();
 
-        if (_debug) {
+        if (window._environment.debug === true) {
             // Clear Console on reload
             w.addEventListener('beforeunload', function () {
                 c.clear()
@@ -45,7 +40,7 @@ define(['jQuery'], function($) {
             try {
                 return f();
             } catch (exp) {
-                if (_debug) {
+                if (window._environment.debug) {
                     if (contextName != undefined) (c.error || c.log)('Exception in component \'' + contextName + '\'', exp);
                     else (c.error || c.log)(exp);
                 }
