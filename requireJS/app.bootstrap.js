@@ -2,10 +2,8 @@
 
 (function(baseUrl, appRoot) {
     window.module = {exports: {}};
-    
-    window._environment = window._environment instanceof Object ? window._environment : {};
-    window._environment.appContext = window._environment.hasOwnProperty('appContext') ? window._environment.appContext : 'Production';
 
+    require(['modules/environment']);
     requirejs.config({
         appDir: appRoot,
         baseUrl: baseUrl,
