@@ -1,5 +1,6 @@
 Fluid-Template:
-    
+
+```html
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
 <v:asset.script name="appcontext" group="kuno">
@@ -10,3 +11,4 @@ Fluid-Template:
 <v:page.footer>
     <script data-main="{f:uri.resource(extensionName: 'my-sideload-ext', path: 'Js/app.bootstrap.js')}" src="{f:uri.resource(extensionName: 'my-sideload-ext', path: 'Js/require.js')}"></script>
 </v:page.footer>
+```
