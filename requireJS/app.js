@@ -1,4 +1,4 @@
-define(['jQuery', 'environment'], function() {
+define(['jQuery'], function() {
     (function(doc, $) {
         $(document).ready(function() {
             tryModule(function () {
