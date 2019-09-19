@@ -16,7 +16,6 @@
       $(this).find(this.validLightly.selector)
           .filter('[pattern],[required]').not('[hidden]')
           .on('submit invalid', $.proxy(function(e) {
-              console.log(e.type);
               if(e.type === 'invalid') {
                   e.preventDefault();
               }
