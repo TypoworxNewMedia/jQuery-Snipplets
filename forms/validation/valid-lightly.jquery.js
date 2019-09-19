@@ -35,9 +35,9 @@
                   isRequired = !!$(this).prop('required')
               ;
 
-              hasError = hasError || (isRequired && val.length);
+              hasError = hasError || (isRequired && !val.length);
 
-              if (!!!pattern) {
+              if (!!!pattern && !hasError) {
                   if(pattern.substr(0,1) !== pattern.substr(-1,1)) {
                       pattern = '~' + pattern + '~';
                   }
@@ -57,5 +57,5 @@
               cb && cb(this, hasError);
           })
       ;
-  };
+  }
 })(jQuery);
