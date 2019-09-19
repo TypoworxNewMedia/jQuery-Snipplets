@@ -7,30 +7,37 @@
  */
 (function($) {
   $.fn.validLightly = function(opt, cb) {
-      let _self = this.validLightly = $.extend({
+      let _self = this;
+      this.validLightly = $.extend({
           selector: 'input,select',
           errorCssClass: 'has-error',
           errorCallback: cb instanceof Function || null
       }, opt || {});
 
-      $(this).find(this.validLightly.selector)
+      $(this)
+          .on('submit', function() {
+              $(_self.validLightly.selector, this)
+                  .filter('[pattern],[required]')
+                  .not('[hidden]')
+                  .removeClass(_self.validLightly.errorCssClass)
+              ;
+          })
+          .find(this.validLightly.selector)
           .filter('[pattern],[required]').not('[hidden]')
-          .on('submit invalid', $.proxy(function(e) {
+          .on('invalid', function(e) {
               if(e.type === 'invalid') {
                   e.preventDefault();
               }
 
-              $(this).removeClass(this.validLightly.errorCssClass);
-
               let hasError = false,
                   val = $.trim($(this).val()),
                   pattern = $(this).prop('pattern'),
-                  isRequired = $(this).prop('required')
+                  isRequired = !!$(this).prop('required')
               ;
 
-              hasError = hasError || isRequired && !val;
+              hasError = hasError || (isRequired && val.length);
 
-              if (!!pattern) {
+              if (!!!pattern) {
                   if(pattern.substr(0,1) !== pattern.substr(-1,1)) {
                       pattern = '~' + pattern + '~';
                   }
@@ -42,11 +49,13 @@
                   }
               }
 
-              hasError && (this).addClass(this.validLightly.errorCssClass);
+              hasError && $(this).addClass(_self.validLightly.errorCssClass)
+                       || $(this).removeClass(_self.validLightly.errorCssClass)
+              ;
 
               // trigger callback if given
               cb && cb(this, hasError);
-          }, this))
+          })
       ;
   };
 })(jQuery);
