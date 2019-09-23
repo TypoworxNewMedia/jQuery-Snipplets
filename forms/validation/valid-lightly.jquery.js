@@ -1,7 +1,7 @@
 /**
  * A Form Validator following the keep-it-simple-and-small principle
  *
- * @author Gabriel Kaufmann
+ * @author Gabriel Kaufmann <info@typoworx.com>
  * @param opt   options object
  * @param cb    optional callback-function
  */
@@ -54,7 +54,7 @@
               ;
 
               // trigger callback if given
-              cb && cb(this, hasError);
+              cb && cb instanceof Function && cb(this, hasError);
           })
       ;
   }
