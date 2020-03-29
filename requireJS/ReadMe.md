@@ -3,7 +3,7 @@ Fluid-Template:
 ```html
 {namespace v=FluidTYPO3\Vhs\ViewHelpers}
 
-<v:asset.script name="appcontext" group="kuno">
+<v:asset.script name="appcontext" group="app">
     var _environment={'appContext': '<f:format.raw>{v:context.get()}</f:format.raw>'}
     var _app={};
 </v:asset.script>
