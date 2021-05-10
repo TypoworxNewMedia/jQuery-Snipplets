@@ -16,33 +16,34 @@
  **/
 
 (function ($) {
-$.fn.touchHandler = function() {
+    $.fn.touchHandler = function() {
         $(this).on('touchstart touchend mousedown mouseup touchmove mousemove', function(e) {
             e.preventDefault();
 
-            var offset = [ e.clientX, e.clientY ],
-                isDragging = $(this).data('dragging-move')
-            ;
+            var offset = [ e.clientX, e.clientY ];
 
             if(e.type === 'touchstart' || e.type === 'mousedown')
             {
                 //console.log('drag-start');
-                isDragging = true;
+                $(this).trigger('start.touch', offset);
+                $(this).data('drag-offset', offset);
+                $(this).addClass('drag-start');
 
-                $(this).trigger('start.touch');
-                $(this).data('dragging-enabled', true);
-                $(this).data('dragging-offset', offset);
+                $(this).data('drag-active', true);
             }
             else if(e.type === 'touchend' || e.type === 'mouseup')
             {
                 //console.log('drag-end');
-                isDragging = false;
-                $(this).data('dragging', false);
                 $(this).trigger('end.touch', offset);
 
-                var dragOffset = $(this).data('dragging-offset');
+                $(this).removeClass('drag-start');
+                $(this).data('drag-active', false);
+
+                var dragOffset = $(this).data('drag-offset');
+                $(this).data('drag-offset', [0,0]);
                 var dragRelative = { top: 0, left: 0, bottom: 0, right: 0};
 
+                console.log(offset[0],dragOffset[0]);
                 if(offset[0] > dragOffset[0])
                 {
                     //console.log('drag move right');
@@ -68,15 +69,12 @@ $.fn.touchHandler = function() {
                 dragRelative.top = offset[1] - dragOffset[1];
                 dragRelative.left = offset[0] - dragOffset[0];
                 $(e.target).trigger('endmove.touch', dragRelative);
-
-                $(this).data('dragging-offset', [0,0]);
             }
 
-            if(isDragging === true)
+
+            if($(this).data('drag-active') === true)
             {
-                //console.log('drag moving');
                 $(this).trigger('move.touch', offset);
-                $(this).data('dragging-offset', offset);
             }
         });
 
